@@ -14,3 +14,4 @@ Aplicación web para la gestión escolar con **Vue 3 + Vite** en el frontend y *
 
 # schoolosys
 # proyecto-2
+# schoolosys
