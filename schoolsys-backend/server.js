@@ -8,16 +8,21 @@ const { Server } = require('socket.io')
 const app = express()
 const server = http.createServer(app)
 const io = new Server(server, {
-  cors: { origin: '*' }
+  cors: { origin: process.env.ORIGIN || '*' }
 })
 
-app.use(cors())
+app.use(cors({ origin: process.env.ORIGIN || '*' }))
 app.use(express.json())
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => console.log('MongoDB conectado'))
+})
+.then(() => console.log('MongoDB conectado'))
+.catch(err => {
+  console.error('Error conectando a MongoDB:', err.message)
+  process.exit(1) // Render se cae si no conecta
+})
 
 // Socket global
 app.set('io', io)
